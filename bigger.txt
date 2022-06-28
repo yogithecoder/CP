@@ -1,0 +1,96 @@
+#include <iostream>
+
+#include <algorithm>
+
+using namespace std;
+
+#define MAXN 1000
+
+class elephant
+{
+public:
+
+	int index; 
+	int weight; 
+	int iq;
+
+	bool operator<(const elephant &other) const{
+
+	if (weight!= other.weight)
+        return weight<other.weight;
+    return iq> other.iq;
+
+	}
+};
+
+elephant elephants [MAXN];
+
+int length[MAXN]; 
+
+int parent[MAXN];
+
+
+void backtrack(int index)
+
+{
+
+	if (parent[index] != -1) 
+	backtrack(parent[index]);
+
+	cout << (elephants[index].index + 1) << endl;
+
+}
+
+int main(int ac, char *av[])
+
+{
+
+	int index=0, weight, iq;
+
+	while (cin>> weight >> iq)
+	elephants[index++]=(elephant) {index, weight, iq};
+	
+	sort(elephants, elephants+index);
+
+for (int i = 0; i < index; i++){
+
+	length[1] = 1;
+
+	parent[1] = -1;
+}
+
+int maxLength = 0, maxIndex = 0;
+
+for(int i = 0; i < index; i++){
+
+	int iq = elephants[i].iq;
+
+	int weight = elephants[i].weight;
+
+	for (int j = 0; j < i; j++){
+
+	if (elephants[j].weight<weight && elephants[j].iq>iq)
+	if (length[i] <= length[j]){
+
+	length[i] =length[j] + 1;
+
+	parent[i] = j;
+
+	}
+}
+
+	if(maxLength<length[i]){
+	maxLength = length[i];
+
+	maxIndex = 1;
+
+	}
+
+}
+
+	cout << maxLength << endl;
+
+	backtrack(maxIndex);
+
+	return 0;
+}
